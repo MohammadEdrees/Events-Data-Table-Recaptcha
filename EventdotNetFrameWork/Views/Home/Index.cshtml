@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron text-center " style="background-color:black">
+    <h1 style="color:white;">Events</h1>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel"> </h4>
+            </div>
+            <div id="im" class="modal-body text-center">
+
+            </div>
+            <div class="modal-body " id="desc" style=" text-overflow:ellipsis;overflow:hidden;word-wrap:break-word;">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<table id="ev" class="table container  text-center    "    ></table>
+
+<link href="//cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="//cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        
+        $(document).ready(function () {
+           
+            $.ajax(
+                {
+                    url: "/Events/GetEvents",
+                    dataType: "json",
+                    type: "GET",
+                    success: function (res) {
+                        $.each(res.data, function (index, value) {
+                            $("#ev").append(`<tr data-toggle="modal" data-target="#myModal"  class="r" style="padding:1px  ; border-bottom-style:solid;border-bottom-width:4px;border-bottom-color:black;" ><td  style=" font-size:50px;    " id="${value.EventId}"> ${value.Title} </td><td><img id="img" src="/Images/${value.Img}" style="width:800px;height:400px;border-radius:3%;padding:4px;   margin:20px;" /></td></tr> `)
+                            
+                        });
+
+                    },
+                    error:
+                        (err) => console.log(err)
+                }
+
+            );
+            $("#ev").on('click', 'tr', function (ev) {
+                
+                var Id = $(this).find("td").attr("id");
+
+                $.ajax(
+                    {
+                        url: "/Events/GetEvents",
+                        dataType: "json",
+                        type: "GET",
+                        success: function (res) {
+                            $.each(res.data, function (index, value) {
+                                if (value.EventId == Id) {
+                                    $("#myModalLabel").empty();
+                                    $("#desc").empty();
+                                    $("#im").empty();
+                                    $("#myModalLabel").append(` ${value.Title} `);
+                                    $("#desc").append(value.Description);
+                                    $("#im").append(`<img  src="/Images/${value.Img}" style="width:200px;height:150px;padding:4px; margin:20px;" />`);
+                                    
+                                }
+
+
+                            });
+
+                        },
+                        error:
+                            (err) => console.log("err",err)
+                    }
+
+                );
+ 
+
+            })
+
+            
+        });
+
+    </script>
+
+}
+

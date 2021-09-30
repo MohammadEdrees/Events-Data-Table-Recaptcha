@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "LockedOut";
+}
+@using Recaptcha.Web.Mvc;
+
+<h2>LockedOut</h2>
+<div>
+    @using (Html.BeginForm("SubmitCaptcha", "Account", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.RecaptchaWidget();
+       
+        <input type="submit" value="Submit">
+    }
+</div>
+
+
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+</script>
+

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container text-center">
+    <h2>Available Roles</h2>
+
+    <div class="col-sm-12" >
+        <table class="table table-bordered">
+            <tr>
+                <th>Role Name</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                </tr>
+
+            }
+        </table>
+            @Html.ActionLink("Create New Role", "Create", "Roles", new {@class="btn btn-primary "})
+    </div>
+</div>
+

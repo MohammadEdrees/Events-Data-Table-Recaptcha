@@ -1,0 +1,31 @@
+﻿@model EventdotNetFrameWork.Models.RegisterViewModel
+@{
+    ViewBag.Title = "RegisterRole";
+}
+
+<h2>AssignRegisterRole</h2>
+@using (Html.BeginForm("RegisterRole","Account",FormMethod.Post,new { @class = "form-horizontal", role = "form" }))
+            {
+            @Html.AntiForgeryToken()
+            <h4>Create a new Account</h4>
+            @Html.ValidationSummary("",new { @class="text-danger"})
+            
+<div>
+    @Html.Label("Select User", new { @class = " control-label" })
+
+    <div>
+        @Html.DropDownList("UserName")
+    </div>
+    @Html.Label("Select Role", new { @class = " control-label" })
+    <div>
+        @Html.DropDownList("Name")
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-primary" value=" Assign Role To User " />
+    </div>
+
+
+</div>
+
+            }
